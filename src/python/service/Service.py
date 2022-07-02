@@ -23,8 +23,8 @@ class AuthService():
         return UserLoginModel.query.all()
     def getByUsername(self,username):
         return  UserLoginModel.query.filter(UserLoginModel.username==username).first()
-    def register(self,username,password,fullname,key_n,key_e):
-        u = UserLoginModel(username=username,password=password,fullname=fullname,key_n=key_n,key_e=key_e)
+    def register(self,username,password,fullname):
+        u = UserLoginModel(username=username,password=password,fullname=fullname)
         db.session.add(u)
         db.session.commit()
         db.session.refresh(u)
