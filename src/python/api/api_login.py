@@ -19,8 +19,8 @@ def login():
     usr = data["username"]
     pwd = data["password"]
 
-    a = UserLoginModel.query.all()
     u = auSer.login(usr,pwd)
+    print(u)
     if u==None:
         res=False
     else:
