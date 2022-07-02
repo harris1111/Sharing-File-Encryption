@@ -4,7 +4,7 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] ="mysql+pymysql://root@localhost/crypto_project?charset=utf8mb4"
+app.config["SQLALCHEMY_DATABASE_URI"] ="mysql+pymysql://root@localhost/ANMT?charset=utf8mb4"
 
 
 #app.config["SQLALCHEMY_DATABASE_URI"] ="mysql+pymysql://ugwvdlisgyydugol:ylYw4TwKw7IGmzRoKkOa@br1m5ieutnnxcbnrvyhk-mysql.services.clever-cloud.com:3306/br1m5ieutnnxcbnrvyhk?charset=utf8mb4"
