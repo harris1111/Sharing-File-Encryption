@@ -1,13 +1,22 @@
+from venv import create
 from models import *
 from sqlalchemy import exc
+import pandas as pd
 import hashSHAsalt
 class AuthService():
     def login(self,username,password):
         username = username.strip()
-        password = hashSHAsalt.password.strip()
+        password = password.strip()
+        engine = create_engine("mysql+pymysql://root@localhost/crypto_project?charset=utf8mb4")
         print(password)
-        print(UserLoginModel.query.filter(UserLoginModel.password==password))
-        print(hashSHAsalt.matchHashedText(password,UserLoginModel.password))
+        sql = "select password from userlogin where username = '" + username+"'"
+        df = pd.read_sql(sql, con=engine)
+        password_hashed = df.password[0]
+        print(password_hashed)
+        print(hashSHAsalt.matchHashedText(password_hashed,password))
+        u = UserLoginModel.query.filter(UserLoginModel.username==username,
+            UserLoginModel.password==password_hashed).first()
+        return u
     def getByID(self,userlogin_id):
         return UserLoginModel.query.get(int(userlogin_id))
     def getAll(self):
