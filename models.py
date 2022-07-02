@@ -12,8 +12,6 @@ class UserLoginModel(db.Model, UserMixin):
     fullname=  Column(String(50) , nullable=False)
     username = Column(String(50) , nullable=False, unique=True)
     password = Column(Text, nullable=False)
-    key_e = Column(Text, nullable=False)
-    key_n = Column(Text, nullable=False)
     shares = relationship("SharePictureModel",backref="userlogin",lazy = True,cascade="delete")
     pictures = relationship("PictureModel",backref="userlogin",lazy = True,cascade="delete")
     def __str__(self):
