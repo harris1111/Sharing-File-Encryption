@@ -58,31 +58,15 @@
 					<div style="overflow: auto; height:320px;">
 						<input type="text" name="input_full_name" id="input_fullname_reg" placeholder="Full name"
 							required>
+						<input type="text" name="input_phone" id="input_phone_reg" placeholder="Phone" required>
+						<input type="text" name="input_address" id="input_address_reg" placeholder="Address" required>
+						<input type="date" name="input_date" id="input_date_reg" placeholder="Date of birth" required>
 						<input name="input_username" id="input_username_reg" type="text" placeholder="Email" required>
+
 						<input type="password" name="input_password" id="input_password_reg" placeholder="Password"
 							required>
 						<input type="password" name="input_password_reg_conf" id="input_password_reg_conf"
 							placeholder="Confirm Password" required>
-
-						<div class="row">
-							<div class="col-5">
-								<p id="random_n" class="mb-0"></p>
-							</div>
-							<div class="col-5">
-								<p id="random_e" class="mb-0"></p>
-							</div>
-							<div class="col-2">
-								<button id="btn-refresh"><i class="fa fa-sync"></i></button>
-							</div>
-							<div class="col-6">
-								<input type="text" name="input_reg_key_n" id="input_reg_key_n" placeholder="Nhập key N"
-									required>
-							</div>
-							<div class="col-6">
-								<input type="text" name="input_reg_key_e" id="input_reg_key_e" placeholder="Nhập key E"
-									required>
-							</div>
-						</div>
 					</div>
 					<input type="submit" class="btn btn-primary" style="float: right; padding: 10px 30px;
 							float: right; background-color: #242424; 
@@ -171,16 +155,10 @@
 	var input_fullname_reg = document.getElementById('input_fullname_reg')
 
 
-
-	var input_reg_key_e = document.getElementById('input_reg_key_e')
-	var input_reg_key_n = document.getElementById('input_reg_key_n')
-
 	$("#input_submit_reg").click(function () {
 
 		var pwd = input_pwd_reg.value.trim()
 		var pwd_conf = input_pwd_reg_conf.value.trim()
-		var key_n = input_reg_key_n.value.trim()
-		var key_e = input_reg_key_e.value.trim()
 		if (pwd != pwd_conf) {
 			alert("Confirm fail!!!");
 			return;
@@ -192,8 +170,6 @@
 			'fullname': input_fullname_reg.value.trim(),
 			'username': input_usr_reg.value.trim(),
 			'password': pwd,
-			'key_n': key_n,
-			'key_e': key_e
 		}
 		$.ajax({
 			url: urlReg,
