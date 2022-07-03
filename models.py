@@ -35,7 +35,7 @@ class FileModel(db.Model):
 class ShareFileModel(db.Model):
     __tablename__ = 'sharefile'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    file_id = Column(Integer, ForeignKey('file.id'))
+    file_id = Column(Integer, ForeignKey('File.id'))
     userlogin_id = Column(Integer, ForeignKey('userlogin.id'))
     __table_args__ = (db.UniqueConstraint(file_id, userlogin_id),)
     def __str__(self):
