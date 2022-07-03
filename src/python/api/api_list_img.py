@@ -1,4 +1,3 @@
-import cv2
 from flask import render_template, request, url_for, session, jsonify
 from flask_login.utils import login_required
 from flask_login import current_user, login_user
@@ -9,7 +8,7 @@ import json
 from models import PictureModel
 from src.python.service.Service import AuthService, PictureService, ShareService
 
-import pyAesCrypt as AesCrypt
+import img_enc_dec as imgEnDe
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
@@ -32,11 +31,15 @@ def savePic(image_64_encode,user_id,file_name):
     file_name = 'static/uploads/'+file_name #trong file_name la "userid/pic.png"
     with open(file_name,"wb") as output:
         output.write(resource.read())
-        
         output.close()
         
-
-    AesCrypt.encrypt(file_name)
+        # read = resource.read()
+        # encode cho nay (read)      convert bytes  to bytes     b'0x41/0x32'
+        # enRead = read
+    
+        # output.write(enRead)
+        # output.close()
+    imgEnDe.encrypt(file_name)
         
         
 
@@ -59,7 +62,7 @@ def upload_img():
     return json.dumps(res)
 
 @login_required
-@app.route("/mypicture/getPictures",methods=["GET"])
+@app.route("/mypicture/getPictures",methods=["GET"])   
 def getPictures():
     user_id = current_user.id
     pics = picSer.getByUserID(user_id)    
@@ -69,8 +72,9 @@ def getPictures():
         "picture_ids":pictures
     }
     return json.dumps(map)
+    #taam didemer
 
-from base64 import b64encode, decode # or urlsafe_b64decode
+from base64 import b64encode # or urlsafe_b64decode
 
 from urllib.error import URLError, HTTPError
 import flask
@@ -82,27 +86,31 @@ def searchPicture(picture_id):
     pic = picSer.searchByPicID(user_id,picture_id)
     if(pic==None): return ""
 
-    url_img =  'static/uploads/' +pic.pic
+    url_img =  url_for('static',filename='uploads/'+pic.pic)
+    
     
     try:
-        imgInput = cv2.imread(url_img)
-        decode = imgEnDe.decrypt(imgInput)
-        #convert img data to bytes
-        is_success, im_buf_arr = cv2.imencode(".png", decode)
-        byte_im = im_buf_arr.tobytes()
+        urllib.request.urlopen
+        resource = urllib.request.urlopen(flask.request.host_url+url_img)
+        
+        
+        read = resource.read()
+
+        #decode img doan nay decode(read)   convert bytes  to bytes     b'0x41/0x32'
+        decode = read
+
         
         #convert byte to data urls
-        b64_mystring = b64encode(byte_im).decode("utf-8")
+        b64_mystring = b64encode(decode).decode("utf-8")
         url_img ="data:image/png;base64,"+b64_mystring
-        fin = open("test.txt","w+")
-        fin.write(str(decode))
-        fin.close()
     except HTTPError as e:
         print('Error code: ', e.code)
     except URLError as e:
         print('Reason: ', e.reason)
 
     
+
+
     
     map={
         "picture_id": pic.id,
@@ -175,6 +183,3 @@ def shareTo():
         "message": mess
     }
     return json.dumps(map)
-
-
-
