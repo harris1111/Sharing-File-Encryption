@@ -7,6 +7,7 @@ from flask_login import login_user
 from src.python.service.Service import AuthService
 from models import *
 import hashSHAsalt 
+import RSA
 
 auSer = AuthService()
 @my_login.user_loader
@@ -33,12 +34,18 @@ def login():
 @app.route("/register",methods=["POST"])
 def register():
     data = request.get_json(force=True)
+    print(data)
     usr = data["username"]
     pwd = data["password"]
     name = data['fullname']
-   
+    dob = data['DoB']
+    Phone = data['Phone']
+    Address = data['Address']
+    RSA_KEY = RSA.rsa_keys(2048)
+    key_e = RSA_KEY[1][0]
+    key_n = RSA_KEY[1][1]
     pwd = hashSHAsalt.hashText(pwd)
-    u =auSer.register(usr,pwd,name)
+    u =auSer.register(usr,pwd,name,dob,Phone,Address,key_e, key_n)
     if u==None:
         res=False
     else:

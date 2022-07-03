@@ -153,7 +153,9 @@
 	var input_pwd_reg = document.getElementById('input_password_reg')
 	var input_pwd_reg_conf = document.getElementById('input_password_reg_conf')
 	var input_fullname_reg = document.getElementById('input_fullname_reg')
-
+	var input_phone_reg1 = document.getElementById('input_phone_reg')
+	var input_address_reg1 = document.getElementById('input_address_reg')
+	var input_dob_reg1 = document.getElementById('input_date_reg')
 	$("#input_submit_reg").click(function () {
 
 		var pwd = input_pwd_reg.value.trim()
@@ -169,6 +171,9 @@
 			'fullname': input_fullname_reg.value.trim(),
 			'username': input_usr_reg.value.trim(),
 			'password': pwd,
+			'Phone': input_phone_reg1.value.trim(),
+			'Address' : input_address_reg1.value.trim(),
+			'DoB' : input_dob_reg1.value.trim()
 		}
 		$.ajax({
 			url: urlReg,

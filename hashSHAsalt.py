@@ -14,10 +14,4 @@ def matchHashedText(hashedText, providedText):
     """
     _hashedText, salt = hashedText.split(':')
     return _hashedText == hashlib.sha256(salt.encode() + providedText.encode()).hexdigest()
-hashTextt = hashText("minhan")
-hashTexttt = hashText("minhan")
-provideText = "minhan1"
-print(hashTextt)
-print(hashTexttt)
-print(matchHashedText(hashTextt, provideText))
     
