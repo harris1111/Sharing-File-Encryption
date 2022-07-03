@@ -7,10 +7,13 @@ class AuthService():
     def login(self,username,password):
         username = username.strip()
         password = password.strip()
-        engine = create_engine("mysql+pymysql://root@localhost/crypto_project?charset=utf8mb4")
+        engine = create_engine("mysql+pymysql://root@localhost/anmt?charset=utf8mb4")
         print(password)
+        print(username)
         sql = "select password from userlogin where username = '" + username+"'"
+        print(sql)
         df = pd.read_sql(sql, con=engine)
+        print(df)
         password_hashed = df.password[0]
         print(password_hashed)
         print(hashSHAsalt.matchHashedText(password_hashed,password))
